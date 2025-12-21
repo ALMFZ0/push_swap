@@ -15,7 +15,11 @@
 void	sort(t_data *a, t_data *b)
 {
 	if (a->size == 2)
+	{
+		if (is_sorted(a->stack))
+			return ;
 		sa(&a->stack);
+	}
 	else if (a->size == 3)
 		sort_three(&a->stack);
 	else if (a->size == 4)

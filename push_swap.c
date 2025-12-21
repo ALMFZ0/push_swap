@@ -99,7 +99,7 @@ int	main(int argc, char **argv)
 	t_data	*b;
 	char	**args;
 
-	if (argc < 3)
+	if (argc < 2)
 		return (0);
 	a = stack_init();
 	b = stack_init();
@@ -115,6 +115,8 @@ int	main(int argc, char **argv)
 		clean_exit(a, b, args);
 		exit(1);
 	}
+	// if (is_sorted(a->stack))
+	// 	return (0);
 	sort(a, b);
 	clean_exit(a, b, args);
 	return (0);

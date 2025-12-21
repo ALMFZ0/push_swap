@@ -93,7 +93,5 @@ int	checker(t_data *stack, char **args)
 	i = 0;
 	if (is_dup(stack) || is_max(args))
 		return (0);
-	if (is_sorted(stack->stack))
-		return (0);
 	return (1);
 }

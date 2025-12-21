@@ -1,93 +1,168 @@
-# push_swap
-A sorting algorithm project that efficiently sorts integers using two stacks and a limited set of operations.
-push_swap
-📌 Overview
+*This project has been created as part of the 42 curriculum by afeizi.*
 
-push_swap is an algorithmic sorting project where the goal is to sort a list of integers using two stacks and a limited set of operations, while minimizing the total number of moves.
+#  Push_swap - README
 
-This project focuses on algorithm optimization, data structures, and problem-solving under constraints.
+---
 
-🧠 How It Works
+## 📄 Description
 
-You are given a stack A containing random integers
+**Push_swap** is a project from the 42 curriculum that focuses on **sorting integers** using two stacks (`A` and `B`) and a limited set of operations.  
 
-Stack B starts empty
+**Goal:** Output the **shortest possible sequence of moves** to sort a list of integers in ascending order.  
 
-Only a specific set of operations is allowed
+**Strategies based on input size:**
 
-The program outputs the optimal (or near-optimal) sequence of operations to sort stack A in ascending order
+- **Small inputs (2–5 numbers):** Optimized hard-coded methods.  
+- **Larger inputs:** Chunk-based sorting with indexing and range handling.
 
-🔁 Allowed Operations
+---
 
-sa / sb / ss — swap the first two elements
+## 🛠️ Instructions
 
-pa / pb — push the top element to the other stack
+### 1️⃣ Compilation
 
-ra / rb / rr — rotate stack
-
-rra / rrb / rrr — reverse rotate stack
-
-⚙️ Compilation
 make
 
-▶️ Usage
-./push_swap 4 67 3 87 23
+-Generates the push_swap executable from all source files.
+### 2️⃣ Execution
+./push_swap [numbers...]
+Example:
+./push_swap 3 2 1 6 5
+
+-The program prints a sequence of operations (sa, pb, ra, etc.) that sorts the stack.
+### 3️⃣ Error Handling
+
+#### The program validates input:
+❌ Rejects duplicates
+
+❌ Rejects non-integer inputs
+
+❌ Rejects numbers outside the 32-bit signed integer range
+#### If input is invalid, outputs:
+Error
+and exits.
 
 
-The program will output a list of operations that sorts the numbers.
+### 4️⃣ Cleaning
+#### make fclean
+Removes the executable and all object files.
 
-✅ Example
-$ ./push_swap 3 2 1
-sa
-rra
+## 🧩 Algorithm Overview
+Small Input Sorting (2–5 numbers)
 
-📈 Algorithm
+#### Elements	Method
 
-This implementation uses:
+**2-** Swap first two if needed (sa)
 
-Indexing / normalization of values
+**3- sort_three:** Identify min/max and rotate/swap (sa, ra, rra)
 
-Chunk-based sorting strategy for large inputs
+**4- sort_four:** Push min to B (pb), sort three in A, push back (pa)
 
-Optimized handling for small stack sizes (≤ 5)
+**5- sort_five:** Push min(s) to B, sort three/four in A, push back
 
-🧪 Testing
+#### Example (sort_three):
+**Initial Stack A:** [2, 3, 1]
 
-You can test the result using the checker program:
+**Step 1:** Find minimum (1 at index 2) → rra
 
-./push_swap 5 1 4 2 3 | ./checker 5 1 4 2 3
+**Step 2:** Swap if necessary → sa
 
-🚫 Error Handling
+**Result:** [1, 2, 3]
 
-Displays Error on:
+Large Input Sorting (Chunk-based)
 
-Duplicate numbers
+**Step 1:** Initialize stacks
 
-Non-integer inputs
+**Stack A:** all input numbers
 
-Values outside integer range
+**Stack B:** empty
 
-🛠️ Project Structure
-.
-├── src/
-├── includes/
-├── Makefile
-└── README.md
+**Step 2:** Prepare sorted reference
 
-🎯 Goals
+Copy Stack A values to array tab and sort
 
-Produce the smallest possible number of operations
+**Step 3:** Determine chunk size
 
-Respect all allowed operations
+Total Numbers	Chunk Range
 
-Handle edge cases efficiently
+if ≤ 16  --->  5
 
-📚 Resources
+if ≤ 100 ---> 15
 
-42 push_swap subject
+if > 100 ---> 40
 
-Sorting algorithms ()
+**Step 4:** Process stack A in chunks
 
-Stack-based problem solving
+* Push numbers in current chunk from A → B using pb
 
-🧑‍💻 Author ===> Afeizi
+* Rotate (ra, rb, rra, rrb) to optimize moves
+
+* Increment chunk range and min index
+
+**Step 5:** Push back from B → A
+
+* Always find maximum in B
+
+* Rotate to top if needed (rb, rrb)
+
+* Push back to A (pa)
+
+### Example:
+- Initial Stack A: [8, 3, 7, 1, 9, 2, 5]
+
+- Chunk 1 (1–3): push [1,2,3] → Stack B
+
+- Chunk 2 (5–8): push [5,7,8] → Stack B
+
+- Remaining 9 → Stack A
+
+- Push back from B → A sorted → [1,2,3,5,7,8,9]
+
+### 🛠️ Stack Operations Implemented
+
+Operation	Description
+
+- sa / sb	Swap first two elements of A or B
+
+- ss	Swap both A and B simultaneously
+
+- pa / pb	Push top element from B → A or A → B
+
+- ra / rb	Rotate A or B upwards (first → last)
+
+- rr	Rotate both A and B upwards
+
+- rra / rrb	Reverse rotate A or B (last → first)
+
+- rrr	Reverse rotate both A and B
+
+### 🧠 Memory Management
+
+**stack_free:** Frees all nodes in a stack
+
+**free_args:** Frees dynamically allocated input arrays
+
+All allocated memory is properly freed after execution.
+
+### 📚 Resources
+* 42 push_swap subject
+
+* C Programming Documentation
+
+* Linked List in C tutorials
+
+* Stack Data Structure references
+
+**AI Usage:** Only used to organize and write the README content and find the resources.  
+
+All source code was written manually.
+
+### 🔍 Additional Notes
+
+-Implements all required sorting strategies for small and large inputs
+
+-Handles invalid inputs gracefully
+
+-Modular design separates stack operations, helpers, and sorting logic
+
+-Code follows 42 coding standards
